@@ -1,12 +1,15 @@
 package com.walkerviani.primeirospring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name= "tb_user")
+@Table(name = "tb_user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,6 +20,10 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String phone;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
 
@@ -70,6 +77,10 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -82,6 +93,4 @@ public class User implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
-
-
 }
