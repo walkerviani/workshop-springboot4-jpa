@@ -1,14 +1,8 @@
 package com.walkerviani.primeirospring.config;
 
-import com.walkerviani.primeirospring.entities.Category;
-import com.walkerviani.primeirospring.entities.Order;
-import com.walkerviani.primeirospring.entities.Product;
-import com.walkerviani.primeirospring.entities.User;
+import com.walkerviani.primeirospring.entities.*;
 import com.walkerviani.primeirospring.entities.enums.OrderStatus;
-import com.walkerviani.primeirospring.repositories.CategoryRepository;
-import com.walkerviani.primeirospring.repositories.OrderRepository;
-import com.walkerviani.primeirospring.repositories.ProductRepository;
-import com.walkerviani.primeirospring.repositories.UserRepository;
+import com.walkerviani.primeirospring.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private OrderItemRepository OrderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -67,5 +64,12 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        OrderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
